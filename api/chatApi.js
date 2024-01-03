@@ -1,6 +1,6 @@
 const router = require('express').Router();
-const { accessChat } = require('../controller/chatController');
-const auth = require('../middlewares/auth');
+const { accessChat, fetchAllChats } = require('../controller/chatController');
+const authMiddleware = require('../middlewares/auth');
 const { ROLES } = require('../utils/constants');
 
 class ChatAPI {
@@ -10,7 +10,8 @@ class ChatAPI {
     }
 
     setupRoutes() {
-        router.post('/', auth(Object.values(ROLES)), accessChat);
+        router.get('/', authMiddleware(Object.values(ROLES)), fetchAllChats);
+        router.post('/', authMiddleware(Object.values(ROLES)), accessChat);
     }
 
     getRouter() {

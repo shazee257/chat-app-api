@@ -23,7 +23,7 @@ const createUser = (obj) => UserModel.create(obj);
 // find user by query
 const findUser = (query) => UserModel.findOne(query);
 
-// get all users including isBuddy true / false in each user
+// get all users
 const getAllUsers = async ({ query, page, limit }) => {
     const { data, pagination } = await getMongoosePaginatedData({
         model: UserModel,

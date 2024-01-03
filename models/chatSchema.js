@@ -24,7 +24,20 @@ const createChat = (obj) => ChatModel.create(obj);
 // find chat by query
 const findChat = (query) => ChatModel.findOne(query);
 
+// get all chats
+const getAllChats = async ({ query, page, limit }) => {
+    const { data, pagination } = await getMongoosePaginatedData({
+        model: ChatModel,
+        query,
+        page,
+        limit,
+    });
+
+    return { chats: data, pagination };
+};
+
 module.exports = {
     createChat,
-    findChat
+    findChat,
+    getAllChats
 }

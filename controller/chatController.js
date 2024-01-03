@@ -1,4 +1,4 @@
-const { findChat, createChat } = require('../models/chatSchema');
+const { findChat, createChat, getAllChats } = require('../models/chatSchema');
 const { generateResponse, parseBody } = require('../utils');
 const { STATUS_CODES } = require('../utils/constants');
 const asyncHandler = require("express-async-handler");
@@ -35,6 +35,27 @@ const accessChat = asyncHandler(async (req, res, next) => {
     }
 });
 
+// fetch all chats
+const fetchAllChats = asyncHandler(async (req, res, next) => {
+    const page = req.query.page || 1;
+    const limit = req.query.limit || 10;
+
+    const query = { users: { $elemMatch: { $eq: req.user.id } } };
+
+    try {
+        const chatsData = await getAllChats({ query, page, limit });
+        if (chatsData?.chats.length === 0) {
+            generateResponse(null, 'No chats found', res);
+            return;
+        }
+
+        generateResponse(chatsData, 'Chats found', res);
+    } catch (error) {
+        next(error);
+    }
+});
+
 module.exports = {
-    accessChat
+    accessChat,
+    fetchAllChats
 }
