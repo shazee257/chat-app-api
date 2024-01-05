@@ -5,10 +5,10 @@ const { getMongoosePaginatedData } = require("../utils");
 
 // message schema
 const messageSchema = new Schema({
-    sender: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+    sender: { type: Schema.Types.ObjectId, ref: "User" },
     content: { type: String, trim: true },
-    chat: { type: mongoose.Schema.Types.ObjectId, ref: "Chat" },
-    readBy: { type: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }], default: [] },
+    chat: { type: Schema.Types.ObjectId, ref: "Chat" },
+    readBy: { type: [{ type: Schema.Types.ObjectId, ref: "User" }], default: [] },
 }, { timestamps: true, versionKey: false });
 
 // mongoose pagination plugin
@@ -17,4 +17,13 @@ messageSchema.plugin(aggregatePaginate);
 
 const MessageModel = model('Message', messageSchema);
 
+// create message
+const createMessage = (obj) => MessageModel.create(obj);
 
+// find message by query
+const findMessage = (query) => MessageModel.findOne(query);
+
+module.exports = {
+    createMessage,
+    findMessage
+}

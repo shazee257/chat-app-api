@@ -8,7 +8,7 @@ const chatSchema = new Schema({
     chatName: { type: String, trim: true },
     isGroupChat: { type: Boolean, default: false },
     users: { type: [{ type: Schema.Types.ObjectId, ref: "User" }], required: true },
-    latestMessage: { type: Schema.Types.ObjectId, ref: "Message" },
+    lastMessage: { type: Schema.Types.ObjectId, ref: "Message" },
     groupAdmin: { type: Schema.Types.ObjectId, ref: "User" },
 }, { timestamps: true, versionKey: false });
 
@@ -37,8 +37,12 @@ const getAllChats = async ({ query, page, limit, populate }) => {
     return { chats: data, pagination };
 };
 
+// update chat by query
+const updateChat = (query, update) => ChatModel.findOneAndUpdate(query, update, { new: true });
+
 module.exports = {
     createChat,
     findChat,
-    getAllChats
+    getAllChats,
+    updateChat
 }
