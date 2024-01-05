@@ -8,6 +8,7 @@ const { ROLES } = require("../utils/constants");
 const userSchema = new Schema({
     name: { type: String },
     email: { type: String, lowercase: true },
+    profileImage: { type: String, default: null },
     password: { type: String, default: null, select: false },
     role: { type: String, enum: Object.values(ROLES), default: ROLES.USER },
 }, { timestamps: true, versionKey: false });

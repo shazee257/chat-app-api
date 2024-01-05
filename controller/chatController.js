@@ -41,9 +41,17 @@ const fetchAllChats = asyncHandler(async (req, res, next) => {
     const limit = req.query.limit || 10;
 
     const query = { users: { $elemMatch: { $eq: req.user.id } } };
+    const populate = [
+        { path: 'users', select: '-password' },
+        { path: 'groupAdmin', select: '-password' },
+        {
+            path: 'latestMessage', select: '-password',
+            populate: { path: 'sender', select: 'name email profileImage' }
+        },
+    ]
 
     try {
-        const chatsData = await getAllChats({ query, page, limit });
+        const chatsData = await getAllChats({ query, page, limit, populate });
         if (chatsData?.chats.length === 0) {
             generateResponse(null, 'No chats found', res);
             return;
