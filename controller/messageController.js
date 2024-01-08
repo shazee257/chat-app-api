@@ -28,6 +28,20 @@ const sendMessage = asyncHandler(async (req, res, next) => {
     }
 });
 
+// fetch all messages for a chat
+const fetchAllMessages = asyncHandler(async (req, res, next) => {
+    const { chatId } = req.params;
+
+    try {
+
+        //
+
+    } catch (error) {
+        next(error);
+    }
+});
+
 module.exports = {
-    sendMessage
+    sendMessage,
+    fetchAllMessages
 }

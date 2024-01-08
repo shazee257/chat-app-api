@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { sendMessage } = require('../controller/messageController');
+const { sendMessage, fetchAllMessages } = require('../controller/messageController');
 const authMiddleware = require('../middlewares/auth');
 const { ROLES } = require('../utils/constants');
 
@@ -10,9 +10,10 @@ class MessageAPI {
     }
 
     setupRoutes() {
+        router.get('/:chatId', authMiddleware(Object.values(ROLES)), fetchAllMessages);
+
         router.post('/', authMiddleware(Object.values(ROLES)), sendMessage);
 
-        // router.get('/', authMiddleware(Object.values(ROLES)), fetchAllChats);
 
     }
 
