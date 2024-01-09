@@ -1,5 +1,5 @@
 const { updateChat } = require('../models/chatSchema');
-const { createMessage, findMessage } = require('../models/messageSchema');
+const { createMessage, findMessage, getAllMessages } = require('../models/messageSchema');
 const { generateResponse, parseBody } = require('../utils');
 const { STATUS_CODES } = require('../utils/constants');
 const asyncHandler = require("express-async-handler");
@@ -31,11 +31,22 @@ const sendMessage = asyncHandler(async (req, res, next) => {
 // fetch all messages for a chat
 const fetchAllMessages = asyncHandler(async (req, res, next) => {
     const { chatId } = req.params;
+    const page = req.query.page || 1;
+    const limit = req.query.limit || 10;
+    const query = { chat: chatId };
+    const populate = [
+        { path: 'sender', select: 'name email profileImage' },
+        { path: 'chat' }
+    ];
 
     try {
+        const messagesData = await getAllMessages({ query, page, limit, populate });
+        if (messagesData?.messages?.length === 0) {
+            generateResponse(null, 'No messages found', res);
+            return;
+        }
 
-        //
-
+        generateResponse(messagesData, 'Messages fetched', res);
     } catch (error) {
         next(error);
     }

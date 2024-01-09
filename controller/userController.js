@@ -10,7 +10,7 @@ const fetchAllUsers = asyncHandler(async (req, res, next) => {
 
     try {
         const usersData = await getAllUsers({ page, limit });
-        if (usersData?.users.length === 0) {
+        if (usersData?.users?.length === 0) {
             generateResponse(null, 'No users found', res);
             return;
         }

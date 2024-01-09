@@ -23,7 +23,21 @@ const createMessage = (obj) => MessageModel.create(obj);
 // find message by query
 const findMessage = (query) => MessageModel.findOne(query);
 
+// get all messages
+const getAllMessages = async ({ query, page, limit, populate }) => {
+    const { data, pagination } = await getMongoosePaginatedData({
+        model: MessageModel,
+        query,
+        page,
+        limit,
+        populate
+    });
+
+    return { messages: data, pagination };
+};
+
 module.exports = {
     createMessage,
-    findMessage
+    findMessage,
+    getAllMessages
 }
