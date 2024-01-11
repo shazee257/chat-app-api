@@ -1,7 +1,7 @@
-'use strict';
+const { Schema, model, Error: MongooseError } = require("mongoose");
+const { removeUnusedMulterImageFilesOnError } = require("../utils");
 
-const { Schema, model } = require("mongoose");
-
+// log schema
 const logSchema = new Schema({
     timestamp: { type: Date, default: Date.now },
     body: { type: String },
@@ -21,7 +21,8 @@ class ErrorHandling {
     }
 
     static errorHandler(err, req, res, next) {
-        const statusCode = err?.statusCode ? err?.statusCode : 500;
+        // const statusCode = err?.statusCode ? err?.statusCode : 500;
+        const statusCode = error.statusCode || error instanceof MongooseError ? 400 : 500;
         const error = new Error(err?.message.replace(/\"/g, '') || 'Internal Server Error');
 
         const log = new LogModel({
@@ -34,9 +35,10 @@ class ErrorHandling {
 
         // save the log document
         try {
+            removeUnusedMulterImageFilesOnError(req);
             log.save();
         } catch (error) {
-            console.log("Error saving log: ", error);
+            console.log("Error from errorHandling >> ", error);
         }
 
         return res.status(statusCode).json({
