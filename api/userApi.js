@@ -1,16 +1,16 @@
 const { fetchAllUsers } = require('../controller/userController');
-const router = require('express').Router();
+const { Router } = require('express');
 const authMiddleware = require('../middlewares/auth');
 const { ROLES } = require('../utils/constants');
 
 class UserAPI {
     constructor() {
-        this.router = router;
+        this.router = Router();
         this.setupRoutes();
     }
 
     setupRoutes() {
-        router.get('/', authMiddleware(Object.values(ROLES)), fetchAllUsers);
+        this.router.get('/', authMiddleware(Object.values(ROLES)), fetchAllUsers);
     }
 
     getRouter() {

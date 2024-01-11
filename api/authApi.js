@@ -1,15 +1,15 @@
-const router = require('express').Router();
+const { Router } = require('express');
 const { register, login } = require('../controller/authController');
 
 class AuthAPI {
     constructor() {
-        this.router = router;
+        this.router = Router();
         this.setupRoutes();
     }
 
     setupRoutes() {
-        router.post('/register', register);
-        router.post('/login', login);
+        this.router.post('/register', register);
+        this.router.post('/login', login);
     }
 
     getRouter() {

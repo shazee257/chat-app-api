@@ -1,14 +1,14 @@
-const router = require('express').Router();
+const { Router } = require('express');
 const { defaultHandler } = require('../controller/rootController');
 
 class RootAPI {
     constructor() {
-        this.router = router;
+        this.router = Router();
         this.setupRoutes();
     }
 
     setupRoutes() {
-        router.get('/', defaultHandler);
+        this.router.get('/', defaultHandler);
     }
 
     getRouter() {

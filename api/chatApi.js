@@ -1,4 +1,4 @@
-const router = require('express').Router();
+const { Router } = require('express');
 const {
     accessChat,
     fetchAllChats,
@@ -12,19 +12,19 @@ const { ROLES } = require('../utils/constants');
 
 class ChatAPI {
     constructor() {
-        this.router = router;
+        this.router = Router();
         this.setupRoutes();
     }
 
     setupRoutes() {
-        router.get('/', authMiddleware(Object.values(ROLES)), fetchAllChats);
+        this.router.get('/', authMiddleware(Object.values(ROLES)), fetchAllChats);
 
-        router.post('/', authMiddleware(Object.values(ROLES)), accessChat);
-        router.post('/group', authMiddleware(Object.values(ROLES)), createGroupChat);
+        this.router.post('/', authMiddleware(Object.values(ROLES)), accessChat);
+        this.router.post('/group', authMiddleware(Object.values(ROLES)), createGroupChat);
 
-        router.put('/rename', authMiddleware(Object.values(ROLES)), renameGroupChat);
-        router.put('/remove-user', authMiddleware(Object.values(ROLES)), removeFromGroup);
-        router.put('/add-user', authMiddleware(Object.values(ROLES)), addUserToGroup);
+        this.router.put('/rename', authMiddleware(Object.values(ROLES)), renameGroupChat);
+        this.router.put('/remove-user', authMiddleware(Object.values(ROLES)), removeFromGroup);
+        this.router.put('/add-user', authMiddleware(Object.values(ROLES)), addUserToGroup);
     }
 
     getRouter() {

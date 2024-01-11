@@ -13,8 +13,6 @@ class MessageAPI {
         router.get('/:chatId', authMiddleware(Object.values(ROLES)), fetchAllMessages);
 
         router.post('/', authMiddleware(Object.values(ROLES)), sendMessage);
-
-
     }
 
     getRouter() {
