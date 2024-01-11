@@ -11,10 +11,9 @@ const rateLimiter = rateLimit({
         return req.clientIp; // IP address from requestIp.mw(), as opposed to req.ip
     },
     handler: (req, res, next, options) => {
-        return next({
+        next({
             statusCode: STATUS_CODES.TOO_MANY_REQUESTS,
-            message: `Too many requests, You are only allowed ${options?.max} 
-            requests per ${options.windowMs / 60000} minutes`
+            message: `Too many requests, You are only allowed ${options?.max} requests per ${options.windowMs / 60000} minutes`
         });
     },
 });

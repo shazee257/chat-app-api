@@ -21,8 +21,7 @@ class ErrorHandling {
     }
 
     static errorHandler(err, req, res, next) {
-        // const statusCode = err?.statusCode ? err?.statusCode : 500;
-        const statusCode = error.statusCode || error instanceof MongooseError ? 400 : 500;
+        const statusCode = err.statusCode ? err.statusCode : err instanceof MongooseError ? 400 : 500;
         const error = new Error(err?.message.replace(/\"/g, '') || 'Internal Server Error');
 
         const log = new LogModel({
