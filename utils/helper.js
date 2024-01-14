@@ -3,6 +3,7 @@ import jwt from 'jsonwebtoken';
 // generate response with status code
 export const generateResponse = (data, message, res, code = 200) => {
     return res.status(code).json({
+        statusCode: code,
         message,
         data,
     });

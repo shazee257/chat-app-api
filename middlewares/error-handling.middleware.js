@@ -1,17 +1,4 @@
-import { Schema, model, Error as MongooseError } from "mongoose";
-import { removeUnusedMulterImageFilesOnError } from "../utils/helper.js";
-
-// log schema
-const logSchema = new Schema({
-    timestamp: { type: Date, default: Date.now },
-    body: { type: String },
-    statusCode: { type: Number },
-    endPoint: { type: String },
-    message: String,
-    stack: String,
-});
-
-const LogModel = model('Log', logSchema);
+import { Error as MongooseError } from "mongoose";
 
 export function notFound(req, res, next) {
     const error = new Error(`Not Found - ${req.originalUrl}`);
@@ -19,29 +6,38 @@ export function notFound(req, res, next) {
     next(error);
 }
 
-export async function errorHandler(err, req, res, next) {
-    const statusCode = err.statusCode ? err.statusCode : err instanceof MongooseError ? 400 : 500;
-    const error = new Error(err?.message.replace(/\"/g, '') || 'Internal Server Error');
-
-    const log = new LogModel({
-        body: JSON.stringify(req.body),
+class ApiError extends Error {
+    constructor(
         statusCode,
-        endPoint: req?.originalUrl,
-        message: error?.message,
-        stack: error?.stack,
-    });
+        message = "Something went wrong",
+        errors = [],
+        stack = ""
+    ) {
+        super(message);
+        this.statusCode = statusCode;
+        this.data = null;
+        this.message = message;
+        this.success = false;
+        this.errors = errors;
 
-    // save the log document
-    try {
-        removeUnusedMulterImageFilesOnError(req);
-        await log.save();
-    } catch (error) {
-        console.log("Error from errorHandling >> ", error);
+        if (stack) {
+            this.stack = stack;
+        } else {
+            Error.captureStackTrace(this, this.constructor);
+        }
     }
+}
+
+export function errorHandler(err, req, res, next) {
+    const statusCode = err.statusCode ? err.statusCode : err instanceof MongooseError ? 400 : 500;
+    const error = new ApiError(statusCode, err?.message?.replace(/\"/g, '') || 'Internal Server Error', err?.errors, err?.stack);
 
     return res.status(statusCode).json({
         message: error?.message,
-        statusCode: statusCode,
+        errors: error?.errors || [],
+        statusCode: error?.statusCode,
         stack: error?.stack,
     });
 }
+
+

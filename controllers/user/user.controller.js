@@ -13,7 +13,7 @@ export const register = asyncHandler(async (req, res, next) => {
         // user already exist then return error
         if (userExist) return next({
             statusCode: STATUS_CODES.CONFLICT,
-            message: 'Email already exists'
+            message: 'Email already exists',
         });
 
         // hash password
