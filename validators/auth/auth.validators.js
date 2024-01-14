@@ -1,4 +1,5 @@
 import { body } from "express-validator";
+import { findUser } from "../../models/index.js";
 
 export const userRegisterValidator = [
     body("email").trim()
@@ -10,6 +11,20 @@ export const userRegisterValidator = [
     body("password").trim()
         .notEmpty().withMessage("Password is required"),
 ];
+
+export const emailExistsValidator = (req, res, next) => {
+    body('email').custom(async (value) => {
+        const user = await findUser({ email: value });
+        if (user) return next({
+            statusCode: 409,
+            message: "Email already exists!"
+        });
+
+        next();
+    }).run(req);
+}
+
+
 
 export const userLoginValidator = [
     body("email").trim()

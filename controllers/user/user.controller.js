@@ -9,13 +9,6 @@ export const register = asyncHandler(async (req, res, next) => {
     const body = parseBody(req.body);
 
     try {
-        const userExist = await findUser({ email: body?.email });
-        // user already exist then return error
-        if (userExist) return next({
-            statusCode: STATUS_CODES.CONFLICT,
-            message: 'Email already exists',
-        });
-
         // hash password
         const hashedPassword = await hash(body.password, 10);
         body.password = hashedPassword;

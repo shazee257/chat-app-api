@@ -1,7 +1,9 @@
 import { Router } from 'express';
 import { register, login } from '../../controllers/index.js';
 import { validate } from '../../validators/validate.js';
-import { userRegisterValidator, userLoginValidator,mongoIdRequestBodyValidator } from '../../validators/index.js';
+import { userRegisterValidator, userLoginValidator, emailExistsValidator } from '../../validators/index.js';
+import { body } from "express-validator";
+import { findUser } from '../../models/index.js';
 
 export default class AuthAPI {
     constructor() {
@@ -10,7 +12,7 @@ export default class AuthAPI {
     }
 
     setupRoutes() {
-        this.router.post('/register', [userRegisterValidator, validate], register);
+        this.router.post('/register', [userRegisterValidator, validate, emailExistsValidator], register);
         this.router.post('/login', [userLoginValidator, validate], login);
     }
 
