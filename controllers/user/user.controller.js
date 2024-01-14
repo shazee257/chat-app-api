@@ -1,8 +1,8 @@
-import { generateResponse, parseBody, generateAccessToken } from '../utils/helper.js';
-import { createUser, findUser, getAllUsers } from '../models/index.js';
+import { generateResponse, parseBody, generateAccessToken } from '../../utils/helper.js';
+import { createUser, findUser, getAllUsers } from '../../models/index.js';
 import asyncHandler from 'express-async-handler';
 import { compare, hash } from 'bcrypt';
-import { STATUS_CODES } from '../utils/constants.js';
+import { STATUS_CODES } from '../../utils/constants.js';
 
 // register user
 export const register = asyncHandler(async (req, res, next) => {

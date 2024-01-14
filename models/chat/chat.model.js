@@ -1,7 +1,7 @@
 import { Schema, model } from "mongoose";
 import mongoosePaginate from 'mongoose-paginate-v2';
 import aggregatePaginate from "mongoose-aggregate-paginate-v2";
-import { getMongoosePaginatedData } from "../utils/helper.js";
+import { getMongoosePaginatedData } from "../../utils/helper.js";
 
 // chat schema
 const chatSchema = new Schema({

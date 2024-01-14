@@ -1,7 +1,7 @@
-import { generateResponse, parseBody } from '../utils/helper.js';
-import { findChat, createChat, getAllChats } from '../models/index.js';
+import { generateResponse, parseBody } from '../../utils/helper.js';
+import { findChat, createChat, getAllChats } from '../../models/index.js';
 import asyncHandler from 'express-async-handler';
-import { STATUS_CODES } from '../utils/constants.js';
+import { STATUS_CODES } from '../../utils/constants.js';
 
 // create or fetch one to one chat
 export const accessChat = asyncHandler(async (req, res, next) => {

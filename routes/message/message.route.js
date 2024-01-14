@@ -1,7 +1,7 @@
-import { sendMessage, fetchAllMessages } from '../controllers/index.js';
+import { sendMessage, fetchAllMessages } from '../../controllers/index.js';
 import { Router } from 'express';
-import { authMiddleware } from '../middlewares/index.js';
-import { ROLES } from '../utils/constants.js';
+import { authMiddleware } from '../../middlewares/index.js';
+import { ROLES } from '../../utils/constants.js';
 
 export default class MessageAPI {
     constructor() {

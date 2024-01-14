@@ -6,7 +6,7 @@ import { Server } from "socket.io";
 import cookieSession from "cookie-session";
 import requestIp from "request-ip";
 import { log, rateLimiter, notFound, errorHandler } from "./middlewares/index.js";
-import API from "./api/index.js";
+import API from "./routes/index.js";
 
 // initialize environment variables
 dotenv.config();

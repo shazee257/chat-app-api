@@ -1,7 +1,7 @@
-import { generateResponse, parseBody } from '../utils/helper.js';
-import { createMessage, findMessage, getAllMessages } from '../models/index.js';
+import { generateResponse, parseBody } from '../../utils/helper.js';
+import { createMessage, findMessage, getAllMessages } from '../../models/index.js';
 import asyncHandler from 'express-async-handler';
-import { STATUS_CODES } from '../utils/constants.js';
+import { STATUS_CODES } from '../../utils/constants.js';
 
 // send message
 export const sendMessage = asyncHandler(async (req, res, next) => {

@@ -1,8 +1,8 @@
 import { Schema, model } from "mongoose";
 import mongoosePaginate from 'mongoose-paginate-v2';
 import aggregatePaginate from "mongoose-aggregate-paginate-v2";
-import { getMongoosePaginatedData } from "../utils/helper.js";
-import { ROLES } from "../utils/constants.js";
+import { getMongoosePaginatedData } from "../../utils/helper.js";
+import { ROLES } from "../../utils/constants.js";
 
 // user schema
 const userSchema = new Schema({

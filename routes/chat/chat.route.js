@@ -1,7 +1,7 @@
-import { fetchAllChats, accessChat, createGroupChat, renameGroupChat, removeFromGroup, addUserToGroup } from '../controllers/index.js';
+import { fetchAllChats, accessChat, createGroupChat, renameGroupChat, removeFromGroup, addUserToGroup } from '../../controllers/index.js';
 import { Router } from 'express';
-import { authMiddleware } from '../middlewares/index.js';
-import { ROLES } from '../utils/constants.js';
+import { authMiddleware } from '../../middlewares/index.js';
+import { ROLES } from '../../utils/constants.js';
 
 export default class ChatAPI {
     constructor() {

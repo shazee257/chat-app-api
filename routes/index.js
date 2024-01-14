@@ -1,12 +1,11 @@
-// const MessageAPI = require('./messageApi');
 import { Router } from 'express';
-import RootAPI from './root.api.js';
-import AuthAPI from './auth.api.js';
-import UserAPI from './user.api.js';
-import ChatAPI from './chat.api.js';
-import MessageAPI from './message.api.js';
+import RootAPI from './root/root.route.js';
+import AuthAPI from './auth/auth.route.js';
+import UserAPI from './user/user.route.js';
+import ChatAPI from './chat/chat.route.js';
+import MessageAPI from './message/message.route.js';
 
-class API {
+export default class API {
     constructor(app) {
         this.app = app;
         this.router = Router();
@@ -34,5 +33,3 @@ class API {
         });
     }
 }
-
-export default API;
