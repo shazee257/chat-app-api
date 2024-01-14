@@ -1,7 +1,7 @@
-const { Schema, model } = require("mongoose");
-const mongoosePaginate = require('mongoose-paginate-v2');
-const aggregatePaginate = require("mongoose-aggregate-paginate-v2");
-const { getMongoosePaginatedData } = require("../utils");
+import { Schema, model } from "mongoose";
+import mongoosePaginate from 'mongoose-paginate-v2';
+import aggregatePaginate from "mongoose-aggregate-paginate-v2";
+import { getMongoosePaginatedData } from "../utils/helper.js";
 
 // message schema
 const messageSchema = new Schema({
@@ -18,13 +18,13 @@ messageSchema.plugin(aggregatePaginate);
 const MessageModel = model('Message', messageSchema);
 
 // create message
-const createMessage = (obj) => MessageModel.create(obj);
+export const createMessage = (obj) => MessageModel.create(obj);
 
 // find message by query
-const findMessage = (query) => MessageModel.findOne(query);
+export const findMessage = (query) => MessageModel.findOne(query);
 
 // get all messages
-const getAllMessages = async ({ query, page, limit, populate }) => {
+export const getAllMessages = async ({ query, page, limit, populate }) => {
     const { data, pagination } = await getMongoosePaginatedData({
         model: MessageModel,
         query,
@@ -35,9 +35,3 @@ const getAllMessages = async ({ query, page, limit, populate }) => {
 
     return { messages: data, pagination };
 };
-
-module.exports = {
-    createMessage,
-    findMessage,
-    getAllMessages
-}

@@ -1,8 +1,3 @@
-// const { Schema, model } = require("mongoose");
-// const mongoosePaginate = require('mongoose-paginate-v2');
-// const aggregatePaginate = require("mongoose-aggregate-paginate-v2");
-// const { getMongoosePaginatedData } = require("../utils");
-// const { ROLES } = require("../utils/constants");
 import { Schema, model } from "mongoose";
 import mongoosePaginate from 'mongoose-paginate-v2';
 import aggregatePaginate from "mongoose-aggregate-paginate-v2";

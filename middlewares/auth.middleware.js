@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 import { STATUS_CODES } from '../utils/constants.js';
 
-export default (roles) => {
+export const authMiddleware = (roles) => {
     return (req, res, next) => {
         const accessToken = req.header('accessToken') || req.session.accessToken;
         if (!accessToken) return next({

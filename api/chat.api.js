@@ -1,16 +1,9 @@
-const { Router } = require('express');
-const {
-    accessChat,
-    fetchAllChats,
-    createGroupChat,
-    renameGroupChat,
-    removeFromGroup,
-    addUserToGroup
-} = require('../controller/chatController');
-const authMiddleware = require('../middlewares/auth');
-const { ROLES } = require('../utils/constants');
+import { fetchAllChats, accessChat, createGroupChat, renameGroupChat, removeFromGroup, addUserToGroup } from '../controllers/index.js';
+import { Router } from 'express';
+import { authMiddleware } from '../middlewares/index.js';
+import { ROLES } from '../utils/constants.js';
 
-class ChatAPI {
+export default class ChatAPI {
     constructor() {
         this.router = Router();
         this.setupRoutes();
@@ -35,5 +28,3 @@ class ChatAPI {
         return '/chat';
     }
 }
-
-module.exports = ChatAPI;

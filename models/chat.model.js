@@ -1,7 +1,7 @@
-const { Schema, model } = require("mongoose");
-const mongoosePaginate = require('mongoose-paginate-v2');
-const aggregatePaginate = require("mongoose-aggregate-paginate-v2");
-const { getMongoosePaginatedData } = require("../utils");
+import { Schema, model } from "mongoose";
+import mongoosePaginate from 'mongoose-paginate-v2';
+import aggregatePaginate from "mongoose-aggregate-paginate-v2";
+import { getMongoosePaginatedData } from "../utils/helper.js";
 
 // chat schema
 const chatSchema = new Schema({
@@ -19,13 +19,13 @@ chatSchema.plugin(aggregatePaginate);
 const ChatModel = model('Chat', chatSchema);
 
 // create new chat
-const createChat = (obj) => ChatModel.create(obj);
+export const createChat = (obj) => ChatModel.create(obj);
 
 // find chat by query
-const findChat = (query) => ChatModel.findOne(query);
+export const findChat = (query) => ChatModel.findOne(query);
 
 // get all chats
-const getAllChats = async ({ query, page, limit, populate }) => {
+export const getAllChats = async ({ query, page, limit, populate }) => {
     const { data, pagination } = await getMongoosePaginatedData({
         model: ChatModel,
         query,
@@ -38,11 +38,4 @@ const getAllChats = async ({ query, page, limit, populate }) => {
 };
 
 // update chat by query
-const updateChat = (query, update) => ChatModel.findOneAndUpdate(query, update, { new: true });
-
-module.exports = {
-    createChat,
-    findChat,
-    getAllChats,
-    updateChat
-}
+export const updateChat = (query, update) => ChatModel.findOneAndUpdate(query, update, { new: true });

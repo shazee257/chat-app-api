@@ -5,10 +5,8 @@ import { createServer } from "http";
 import { Server } from "socket.io";
 import cookieSession from "cookie-session";
 import requestIp from "request-ip";
-import { rateLimiter } from "./middlewares/rateLimiter.js";
-import { log } from "./middlewares/log.js";
+import { log, rateLimiter, notFound, errorHandler } from "./middlewares/index.js";
 import API from "./api/index.js";
-import { notFound, errorHandler } from "./middlewares/errorHandling.js";
 
 // initialize environment variables
 dotenv.config();
@@ -40,7 +38,6 @@ app.use(express.urlencoded({ extended: true, limit: "16kb" }));
 app.use(cookieSession({
     name: 'session',
     keys: [process.env.COOKIE_KEY],
-    // keys: ['secret'],
     maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
 }));
 app.use(cors({ origin: "*", credentials: true }));

@@ -1,11 +1,10 @@
-const { updateChat } = require('../models/chatSchema');
-const { createMessage, findMessage, getAllMessages } = require('../models/messageSchema');
-const { generateResponse, parseBody } = require('../utils');
-const { STATUS_CODES } = require('../utils/constants');
-const asyncHandler = require("express-async-handler");
+import { generateResponse, parseBody } from '../utils/helper.js';
+import { createMessage, findMessage, getAllMessages } from '../models/index.js';
+import asyncHandler from 'express-async-handler';
+import { STATUS_CODES } from '../utils/constants.js';
 
 // send message
-const sendMessage = asyncHandler(async (req, res, next) => {
+export const sendMessage = asyncHandler(async (req, res, next) => {
     const { content, chatId } = parseBody(req.body);
 
     if (!content || !chatId) return next({
@@ -29,7 +28,7 @@ const sendMessage = asyncHandler(async (req, res, next) => {
 });
 
 // fetch all messages for a chat
-const fetchAllMessages = asyncHandler(async (req, res, next) => {
+export const fetchAllMessages = asyncHandler(async (req, res, next) => {
     const { chatId } = req.params;
     const page = req.query.page || 1;
     const limit = req.query.limit || 10;
@@ -51,8 +50,3 @@ const fetchAllMessages = asyncHandler(async (req, res, next) => {
         next(error);
     }
 });
-
-module.exports = {
-    sendMessage,
-    fetchAllMessages
-}

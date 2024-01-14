@@ -1,12 +1,5 @@
-// const { generateResponse, parseBody, generateAccessToken } = require('../utils');
-
-// const { createUser, findUser } = require('../models/userModel');
-// const asyncHandler = require("express-async-handler");
-// const { compare, hash } = require('bcrypt');
-// const { STATUS_CODES } = require('../utils/constants');
-
 import { generateResponse, parseBody, generateAccessToken } from '../utils/helper.js';
-import { createUser, findUser } from '../models/userModel.js';
+import { createUser, findUser, getAllUsers } from '../models/index.js';
 import asyncHandler from 'express-async-handler';
 import { compare, hash } from 'bcrypt';
 import { STATUS_CODES } from '../utils/constants.js';
@@ -56,6 +49,24 @@ export const login = asyncHandler(async (req, res, next) => {
         req.session.accessToken = accessToken;
 
         generateResponse({ user, accessToken }, 'Login successful', res);
+    } catch (error) {
+        next(error);
+    }
+});
+
+// get all users
+export const fetchAllUsers = asyncHandler(async (req, res, next) => {
+    const page = req.query.page || 1;
+    const limit = req.query.limit || 10;
+
+    try {
+        const usersData = await getAllUsers({ page, limit });
+        if (usersData?.users?.length === 0) {
+            generateResponse(null, 'No users found', res);
+            return;
+        }
+
+        generateResponse(usersData, 'Users found', res);
     } catch (error) {
         next(error);
     }

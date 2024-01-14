@@ -1,6 +1,6 @@
 import { fetchAllUsers } from '../controllers/index.js';
 import { Router } from 'express';
-import authMiddleware from '../middlewares/auth.js';
+import { authMiddleware } from '../middlewares/index.js';
 import { ROLES } from '../utils/constants.js';
 
 export default class UserAPI {

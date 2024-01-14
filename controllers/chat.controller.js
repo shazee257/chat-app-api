@@ -1,10 +1,10 @@
-const { findChat, createChat, getAllChats } = require('../models/chatSchema');
-const { generateResponse, parseBody } = require('../utils');
-const { STATUS_CODES } = require('../utils/constants');
-const asyncHandler = require("express-async-handler");
+import { generateResponse, parseBody } from '../utils/helper.js';
+import { findChat, createChat, getAllChats } from '../models/index.js';
+import asyncHandler from 'express-async-handler';
+import { STATUS_CODES } from '../utils/constants.js';
 
 // create or fetch one to one chat
-const accessChat = asyncHandler(async (req, res, next) => {
+export const accessChat = asyncHandler(async (req, res, next) => {
     const { user } = parseBody(req.body);
     const query = {
         isGroupChat: false,
@@ -36,7 +36,7 @@ const accessChat = asyncHandler(async (req, res, next) => {
 });
 
 // fetch all chats
-const fetchAllChats = asyncHandler(async (req, res, next) => {
+export const fetchAllChats = asyncHandler(async (req, res, next) => {
     const page = req.query.page || 1;
     const limit = req.query.limit || 10;
 
@@ -52,6 +52,7 @@ const fetchAllChats = asyncHandler(async (req, res, next) => {
 
     try {
         const chatsData = await getAllChats({ query, page, limit, populate });
+        console.log('first: ', chatsData);
         if (chatsData?.chats.length === 0) {
             generateResponse(null, 'No chats found', res);
             return;
@@ -64,7 +65,7 @@ const fetchAllChats = asyncHandler(async (req, res, next) => {
 });
 
 // create group chat
-const createGroupChat = asyncHandler(async (req, res, next) => {
+export const createGroupChat = asyncHandler(async (req, res, next) => {
     const { chatName, users } = parseBody(req.body);
 
     if (users.length < 2) return next({
@@ -87,7 +88,7 @@ const createGroupChat = asyncHandler(async (req, res, next) => {
 });
 
 // rename group chat
-const renameGroupChat = asyncHandler(async (req, res, next) => {
+export const renameGroupChat = asyncHandler(async (req, res, next) => {
     const { chatName, chatId } = parseBody(req.body);
 
     try {
@@ -111,7 +112,7 @@ const renameGroupChat = asyncHandler(async (req, res, next) => {
 });
 
 // remove from group
-const removeFromGroup = asyncHandler(async (req, res, next) => {
+export const removeFromGroup = asyncHandler(async (req, res, next) => {
     const { chatId, userId } = parseBody(req.body);
 
     try {
@@ -142,7 +143,7 @@ const removeFromGroup = asyncHandler(async (req, res, next) => {
 });
 
 // addUserToGroup
-const addUserToGroup = asyncHandler(async (req, res, next) => {
+export const addUserToGroup = asyncHandler(async (req, res, next) => {
     const { chatId, userId } = parseBody(req.body);
 
     try {
@@ -171,12 +172,3 @@ const addUserToGroup = asyncHandler(async (req, res, next) => {
         next(error);
     }
 });
-
-module.exports = {
-    accessChat,
-    fetchAllChats,
-    createGroupChat,
-    renameGroupChat,
-    removeFromGroup,
-    addUserToGroup
-}
