@@ -1,8 +1,13 @@
-const { Schema, model } = require("mongoose");
-const mongoosePaginate = require('mongoose-paginate-v2');
-const aggregatePaginate = require("mongoose-aggregate-paginate-v2");
-const { getMongoosePaginatedData } = require("../utils");
-const { ROLES } = require("../utils/constants");
+// const { Schema, model } = require("mongoose");
+// const mongoosePaginate = require('mongoose-paginate-v2');
+// const aggregatePaginate = require("mongoose-aggregate-paginate-v2");
+// const { getMongoosePaginatedData } = require("../utils");
+// const { ROLES } = require("../utils/constants");
+import { Schema, model } from "mongoose";
+import mongoosePaginate from 'mongoose-paginate-v2';
+import aggregatePaginate from "mongoose-aggregate-paginate-v2";
+import { getMongoosePaginatedData } from "../utils/helper.js";
+import { ROLES } from "../utils/constants.js";
 
 // user schema
 const userSchema = new Schema({
@@ -19,13 +24,13 @@ userSchema.plugin(aggregatePaginate);
 const UserModel = model('User', userSchema);
 
 // create new user
-const createUser = (obj) => UserModel.create(obj);
+export const createUser = (obj) => UserModel.create(obj);
 
 // find user by query
-const findUser = (query) => UserModel.findOne(query);
+export const findUser = (query) => UserModel.findOne(query);
 
 // get all users
-const getAllUsers = async ({ query, page, limit }) => {
+export const getAllUsers = async ({ query, page, limit }) => {
     const { data, pagination } = await getMongoosePaginatedData({
         model: UserModel,
         query,
@@ -35,9 +40,3 @@ const getAllUsers = async ({ query, page, limit }) => {
 
     return { users: data, pagination };
 };
-
-module.exports = {
-    createUser,
-    findUser,
-    getAllUsers
-}

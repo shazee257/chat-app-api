@@ -1,9 +1,9 @@
-const ROLES = Object.freeze({
+export const ROLES = Object.freeze({
   USER: 'user',
   ADMIN: 'admin',
 });
 
-const STATUS_CODES = Object.freeze({
+export const STATUS_CODES = Object.freeze({
   SUCCESS: 200,
   CREATED: 201,
   BAD_REQUEST: 400,
@@ -16,5 +16,3 @@ const STATUS_CODES = Object.freeze({
   TOO_MANY_REQUESTS: 429,
   INTERNAL_SERVER_ERROR: 500,
 });
-
-module.exports = { ROLES, STATUS_CODES }

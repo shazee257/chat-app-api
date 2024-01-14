@@ -1,7 +1,7 @@
-const connectDB = require('./config/dbConnect');
-const { httpServer } = require('./app');
-require("dotenv").config();
+import connectDB from "./config/dbConnect.js";
+import { httpServer } from "./app.js";
 
+// set port
 const PORT = process.env.PORT || 5000;
 
 // connect to database

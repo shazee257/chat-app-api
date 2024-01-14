@@ -1,7 +1,7 @@
-const { Router } = require('express');
-const { defaultHandler } = require('../controller/rootController');
+import { defaultHandler } from '../controllers/index.js';
+import { Router } from 'express';
 
-class RootAPI {
+export default class RootAPI {
     constructor() {
         this.router = Router();
         this.setupRoutes();
@@ -19,5 +19,3 @@ class RootAPI {
         return '/';
     }
 }
-
-module.exports = RootAPI;

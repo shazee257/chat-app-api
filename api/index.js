@@ -1,10 +1,10 @@
-const { Router } = require('express');
-
-const RootAPI = require('./rootApi')
-const AuthAPI = require('./authApi');
-const UserAPI = require('./userApi');
-const ChatAPI = require('./chatApi');
-const MessageAPI = require('./messageApi');
+// const UserAPI = require('./userApi');
+// const ChatAPI = require('./chatApi');
+// const MessageAPI = require('./messageApi');
+import { Router } from 'express';
+import RootAPI from './rootApi.js';
+import AuthAPI from './authApi.js';
+import UserAPI from './userApi.js';
 
 class API {
     constructor(app) {
@@ -17,8 +17,8 @@ class API {
         this.routeGroups.push(new RootAPI());
         this.routeGroups.push(new AuthAPI());
         this.routeGroups.push(new UserAPI());
-        this.routeGroups.push(new ChatAPI());
-        this.routeGroups.push(new MessageAPI());
+        // this.routeGroups.push(new ChatAPI());
+        // this.routeGroups.push(new MessageAPI());
     }
 
     setContentType(req, res, next) {
@@ -35,4 +35,4 @@ class API {
     }
 }
 
-module.exports = API;
+export default API;

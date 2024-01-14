@@ -1,7 +1,7 @@
-const { rateLimit } = require("express-rate-limit");
-const { STATUS_CODES } = require("../utils/constants");
+import { rateLimit } from "express-rate-limit";
+import { STATUS_CODES } from "../utils/constants.js";
 
-const rateLimiter = rateLimit({
+export const rateLimiter = rateLimit({
     windowMs: 15 * 60 * 1000, // 15 minutes
     max: 500, // Limit each IP to 500 requests per `window` (here, per 15 minutes)
     standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
@@ -17,5 +17,3 @@ const rateLimiter = rateLimit({
         });
     },
 });
-
-module.exports = { rateLimiter }

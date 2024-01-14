@@ -1,10 +1,9 @@
-const { generateResponse, parseBody } = require('../utils');
-const { getAllUsers } = require('../models/userModel');
-const { STATUS_CODES } = require('../utils/constants');
-const asyncHandler = require("express-async-handler");
+import { generateResponse, parseBody } from '../utils/helper.js';
+import { getAllUsers } from '../models/userModel.js';
+import asyncHandler from 'express-async-handler';
 
 // get all users
-const fetchAllUsers = asyncHandler(async (req, res, next) => {
+export const fetchAllUsers = asyncHandler(async (req, res, next) => {
     const page = req.query.page || 1;
     const limit = req.query.limit || 10;
 
@@ -20,7 +19,3 @@ const fetchAllUsers = asyncHandler(async (req, res, next) => {
         next(error);
     }
 });
-
-module.exports = {
-    fetchAllUsers
-}

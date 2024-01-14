@@ -1,7 +1,7 @@
-const { Router } = require('express');
-const { register, login } = require('../controller/authController');
+import { Router } from 'express';
+import { register, login } from '../controllers/index.js';
 
-class AuthAPI {
+export default class AuthAPI {
     constructor() {
         this.router = Router();
         this.setupRoutes();
@@ -20,5 +20,3 @@ class AuthAPI {
         return '/auth';
     }
 }
-
-module.exports = AuthAPI;

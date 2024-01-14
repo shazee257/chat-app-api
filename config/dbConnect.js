@@ -1,6 +1,6 @@
-const mongoose = require('mongoose');
-const asyncHandler = require("express-async-handler");
-const colors = require("colors");
+import mongoose from 'mongoose';
+import asyncHandler from "express-async-handler";
+import colors from "colors";
 
 const connectDB = asyncHandler(async () => {
     try {
@@ -12,4 +12,4 @@ const connectDB = asyncHandler(async () => {
     }
 });
 
-module.exports = connectDB
+export default connectDB;

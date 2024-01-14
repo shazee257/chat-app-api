@@ -1,7 +1,7 @@
-const { sign } = require("jsonwebtoken");
+import jwt from 'jsonwebtoken';
 
 // generate response with status code
-const generateResponse = (data, message, res, code = 200) => {
+export const generateResponse = (data, message, res, code = 200) => {
     return res.status(code).json({
         message,
         data,
@@ -9,7 +9,7 @@ const generateResponse = (data, message, res, code = 200) => {
 }
 
 // parse body to object or json (if body is string)
-const parseBody = (body) => {
+export const parseBody = (body) => {
     let obj;
     if (typeof body === "object") obj = body;
     else obj = JSON.parse(body);
@@ -17,7 +17,7 @@ const parseBody = (body) => {
 }
 
 // pagination with mongoose paginate library
-const getMongoosePaginatedData = async ({
+export const getMongoosePaginatedData = async ({
     model, page = 1, limit = 10, query = {}, populate = '', select = '-password', sort = { createdAt: -1 },
 }) => {
     const options = {
@@ -43,7 +43,7 @@ const getMongoosePaginatedData = async ({
 }
 
 // aggregate pagination with mongoose paginate library
-const getMongooseAggregatePaginatedData = async ({
+export const getMongooseAggregatePaginatedData = async ({
     model, page = 1, limit = 10, query = []
 }) => {
     const options = {
@@ -67,10 +67,10 @@ const getMongooseAggregatePaginatedData = async ({
 }
 
 // generate access token
-const generateAccessToken = (user) => {
+export const generateAccessToken = (user) => {
     const { ACCESS_TOKEN_EXPIRATION, ACCESS_TOKEN_SECRET } = process.env;
 
-    const token = sign({
+    const token = jwt.sign({
         id: user._id,
         name: user.name,
         email: user.email,
@@ -81,7 +81,7 @@ const generateAccessToken = (user) => {
 };
 
 // remove unused multer image files when error occurs
-const removeUnusedMulterImageFilesOnError = (req) => {
+export const removeUnusedMulterImageFilesOnError = (req) => {
     try {
         const multerFile = req.file;
         const multerFiles = req.files;
@@ -107,13 +107,4 @@ const removeUnusedMulterImageFilesOnError = (req) => {
         // fail silently
         console.log("Error while removing image files: ", error);
     }
-}
-
-module.exports = {
-    generateResponse,
-    parseBody,
-    getMongoosePaginatedData,
-    getMongooseAggregatePaginatedData,
-    generateAccessToken,
-    removeUnusedMulterImageFilesOnError
 }

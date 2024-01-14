@@ -1,11 +1,18 @@
-const { generateResponse, parseBody, generateAccessToken } = require('../utils');
-const { createUser, findUser } = require('../models/userModel');
-const asyncHandler = require("express-async-handler");
-const { compare, hash } = require('bcrypt');
-const { STATUS_CODES } = require('../utils/constants');
+// const { generateResponse, parseBody, generateAccessToken } = require('../utils');
+
+// const { createUser, findUser } = require('../models/userModel');
+// const asyncHandler = require("express-async-handler");
+// const { compare, hash } = require('bcrypt');
+// const { STATUS_CODES } = require('../utils/constants');
+
+import { generateResponse, parseBody, generateAccessToken } from '../utils/helper.js';
+import { createUser, findUser } from '../models/userModel.js';
+import asyncHandler from 'express-async-handler';
+import { compare, hash } from 'bcrypt';
+import { STATUS_CODES } from '../utils/constants.js';
 
 // register user
-const register = asyncHandler(async (req, res, next) => {
+export const register = asyncHandler(async (req, res, next) => {
     const body = parseBody(req.body);
 
     try {
@@ -29,7 +36,7 @@ const register = asyncHandler(async (req, res, next) => {
 });
 
 // login user
-const login = asyncHandler(async (req, res, next) => {
+export const login = asyncHandler(async (req, res, next) => {
     const body = parseBody(req.body);
 
     try {
@@ -53,8 +60,3 @@ const login = asyncHandler(async (req, res, next) => {
         next(error);
     }
 });
-
-module.exports = {
-    register,
-    login
-}

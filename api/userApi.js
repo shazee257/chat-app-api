@@ -1,9 +1,9 @@
-const { fetchAllUsers } = require('../controller/userController');
-const { Router } = require('express');
-const authMiddleware = require('../middlewares/auth');
-const { ROLES } = require('../utils/constants');
+import { fetchAllUsers } from '../controllers/index.js';
+import { Router } from 'express';
+import authMiddleware from '../middlewares/auth.js';
+import { ROLES } from '../utils/constants.js';
 
-class UserAPI {
+export default class UserAPI {
     constructor() {
         this.router = Router();
         this.setupRoutes();
@@ -21,5 +21,3 @@ class UserAPI {
         return '/user';
     }
 }
-
-module.exports = UserAPI;

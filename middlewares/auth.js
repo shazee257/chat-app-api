@@ -1,7 +1,7 @@
-const { verify } = require('jsonwebtoken');
-const { STATUS_CODES } = require('../utils/constants');
+import jwt from 'jsonwebtoken';
+import { STATUS_CODES } from '../utils/constants.js';
 
-module.exports = (roles) => {
+export default (roles) => {
     return (req, res, next) => {
         const accessToken = req.header('accessToken') || req.session.accessToken;
         if (!accessToken) return next({
@@ -9,7 +9,7 @@ module.exports = (roles) => {
             message: 'Authorization failed!'
         });
 
-        verify(accessToken, process.env.ACCESS_TOKEN_SECRET, function (err, decoded) {
+        jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET, function (err, decoded) {
             if (err) return next({
                 statusCode: STATUS_CODES.UNAUTHORIZED,
                 message: 'token expired'
