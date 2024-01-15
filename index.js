@@ -1,4 +1,4 @@
-import connectDB from "./config/dbConnect.js";
+import connectDB from "./config/database.config.js";
 import { httpServer } from "./app.js";
 
 // set port
