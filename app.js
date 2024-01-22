@@ -7,6 +7,7 @@ import cookieSession from "cookie-session";
 import requestIp from "request-ip";
 import { log, rateLimiter, notFound, errorHandler } from "./middlewares/index.js";
 import API from "./routes/index.js";
+import { initializeSocketIO } from "./socket/index.js";
 
 // initialize environment variables
 dotenv.config();
@@ -28,7 +29,7 @@ const io = new Server(httpServer, {
 // using set method to mount the `io` instance on the app to avoid usage of `global`
 app.set("io", io);
 
-// initializeSocketIO(io);
+initializeSocketIO(io);
 
 console.log('process.env.COOKIE_KEY: ', process.env.COOKIE_KEY);
 // set up middlewares
